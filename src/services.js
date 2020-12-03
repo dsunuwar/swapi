@@ -14,3 +14,20 @@ export const getPeople = () => {
       console.log(error);
     });
 };
+
+const getFilm = async (url) => {
+  return await axios.get(url).then((res) => ({
+    title: res.data.title,
+    releaseDate: res.data.release_date,
+    director: res.data.director,
+  }));
+};
+
+export const getFilms = async (filmUrls) => {
+  const filmPromises = filmUrls.map((url) => getFilm(url));
+  return await Promise.all(filmPromises)
+    .then((films) => films)
+    .catch((error) => {
+      console.log(error);
+    });
+};

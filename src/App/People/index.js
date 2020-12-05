@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -37,7 +38,7 @@ const PeopleList = ({ characters, onRowSelect }) => {
             selected={false}
             onClick={(e) => handleRowSelection(e, character)}
           >
-            <TableCell component="th" scope="row">
+            <TableCell component="th" scope="row" data-testid="character-name">
               {character.name}
             </TableCell>
             <TableCell align="right">{character.height}</TableCell>

@@ -1,36 +1,38 @@
 /* eslint-disable no-console */
 /* eslint-disable react/prop-types */
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import {
-  Box, Typography, List, ListItem, ListItemIcon, ListItemText,
-} from '@material-ui/core';
 import MovieIcon from '@material-ui/icons/Movie';
-import Loading from '../../common/Loading';
-import { getFilms } from '../../services';
+import {
+  Box,
+  Typography,
+  List, ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@material-ui/core';
+
+import Loading from '../common/Loading';
+import { getFilms } from '../services';
 
 const Films = ({ filmUrls }) => {
-  const [films, setFilms] = React.useState([]);
-  const [loadingFilms, setLoadingFilms] = React.useState(false);
+  const [films, setFilms] = useState([]);
+  const [loadingFilms, setLoadingFilms] = useState(false);
   const releaseYear = (date) => {
     const swapiDate = new Date(date);
     return swapiDate.getFullYear();
   };
 
-  React.useEffect(() => {
-    const loadFilms = () => {
-      setLoadingFilms(true);
-      getFilms(filmUrls)
-        .then((resFilms) => {
-          setLoadingFilms(false);
-          setFilms(resFilms);
-        })
-        .catch((error) => {
-          console.log(error);
-          setLoadingFilms(false);
-        });
-    };
-    loadFilms();
+  useEffect(() => {
+    setLoadingFilms(true);
+    getFilms(filmUrls)
+      .then((resFilms) => {
+        setLoadingFilms(false);
+        setFilms(resFilms);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoadingFilms(false);
+      });
   }, [filmUrls]);
 
   return (
@@ -40,7 +42,7 @@ const Films = ({ filmUrls }) => {
       {!loadingFilms && (
       <List dense>
         {films.map((film) => (
-          <ListItem>
+          <ListItem key={film.title}>
             <ListItemIcon>
               <MovieIcon fontSize="small" />
             </ListItemIcon>

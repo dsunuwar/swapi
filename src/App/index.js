@@ -1,12 +1,14 @@
 /* eslint-disable no-console */
 import './App.css';
+
 import React, { useState, useEffect } from 'react';
 import {
   Container, TableContainer, Typography,
 } from '@material-ui/core';
-import { getPeople } from '../services';
 
-import Loading from '../common/Loading';
+import { getPeople } from './services';
+
+import Loading from './common/Loading';
 import People from './People';
 import Detail from './Detail';
 import Pagination from './Pagination';
@@ -44,24 +46,24 @@ const App = () => {
   }, []);
 
   return (
-    <Container
-      classes={{
-        root: 'App-container',
-      }}
-    >
-      <Typography variant="h5">Star War People</Typography>
-      <TableContainer
-        classes={{
-          root: 'Table-container',
-        }}
-      >
+    <Container classes={{ root: 'App-container' }}>
+      <Typography variant="h5">Star Wars People</Typography>
+      <TableContainer classes={{ root: 'Table-container' }}>
         {loading && <Loading />}
         {!loading && (
-          <People characters={characters} onRowSelect={setSelectedCharacter} />
+          <People
+            characters={characters}
+            onRowSelect={setSelectedCharacter}
+          />
         )}
       </TableContainer>
-      <Pagination page={page} onPageChange={pageChange} />
-      {selectedCharacter && <Detail character={selectedCharacter} />}
+      <Pagination
+        page={page}
+        onPageChange={pageChange}
+      />
+      {selectedCharacter && (
+        <Detail character={selectedCharacter} />
+      )}
     </Container>
   );
 };

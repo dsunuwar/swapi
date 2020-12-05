@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
-const axios = require('axios');
-
-const baseUrl = 'https://swapi.dev/api/';
+import * as axios from 'axios';
 
 export const getPeople = (options) => {
+  const baseUrl = 'https://swapi.dev/api/';
   let peopleApi = `${baseUrl}people/`;
 
   if (options?.page) {
@@ -18,13 +17,17 @@ export const getPeople = (options) => {
     });
 };
 
-const getFilm = async (url) => axios.get(url).then((res) => ({
-  title: res.data.title,
-  releaseDate: res.data.release_date,
-  director: res.data.director,
-}));
+const getFilm = (url) => (
+  axios
+    .get(url)
+    .then((res) => ({
+      title: res.data.title,
+      releaseDate: res.data.release_date,
+      director: res.data.director,
+    }))
+);
 
-export const getFilms = async (filmUrls) => {
+export const getFilms = (filmUrls) => {
   const filmPromises = filmUrls.map((url) => getFilm(url));
   return Promise.all(filmPromises)
     .then((films) => films)

@@ -24,8 +24,30 @@
   color: white;
 }
 
+.App-container {
+  padding: 10px 0;
+  border-right: 1px solid rgba(224, 224, 224, 1);
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  border-left: 1px solid rgba(224, 224, 224, 1);
+}
+
 .App-link {
   color: #61dafb;
+}
+
+.Pagination-align {
+  text-align: right;
+}
+
+.Table-container {
+  min-height: 390px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Table-container .MuiTableCell-head {
+  font-weight: bold;
 }
 
 @keyframes App-logo-spin {

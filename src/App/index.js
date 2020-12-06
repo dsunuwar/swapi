@@ -11,7 +11,7 @@ import {
 
 import useApiServices from './useApiServices';
 
-import Loading from './common/Loading';
+import Loading from './Loading';
 import People from './People';
 import Detail from './Detail';
 import Pagination from './Pagination';

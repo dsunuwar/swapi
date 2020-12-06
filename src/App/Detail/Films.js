@@ -12,7 +12,7 @@ import {
 
 import useApiServices from '../useApiServices';
 
-import Loading from '../common/Loading';
+import Loading from '../Loading';
 import { filmSelector } from '../../redux/selectors';
 
 const Films = ({ filmUrls }) => {

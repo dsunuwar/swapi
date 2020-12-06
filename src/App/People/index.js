@@ -8,6 +8,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { Typography } from '@material-ui/core';
 import { setSelectedPeople } from '../../redux/actions';
 
 const useStyles = makeStyles({
@@ -23,6 +24,12 @@ const PeopleList = ({ characters }) => {
   const handleRowSelection = (e, rowItem) => {
     dispatch(setSelectedPeople(rowItem));
   };
+
+  if (!characters.length) {
+    return (
+      <Typography variant="body2">Oops! No records found.</Typography>
+    );
+  }
 
   return (
     <Table className={classes.table} size="small" aria-label="Star people">

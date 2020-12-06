@@ -4,7 +4,7 @@ import './App.css';
 
 import React, { useEffect } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Container, TableContainer, Typography,
 } from '@material-ui/core';
@@ -16,8 +16,10 @@ import People from './People';
 import Detail from './Detail';
 import Pagination from './Pagination';
 import { peopleSelector } from '../redux/selectors';
+import { setSelectedPeople } from '../redux/actions';
 
 const App = () => {
+  const dispatch = useDispatch();
   const { getPeopleAction } = useApiServices();
   const {
     characters, page, loading, selectedCharacter,
@@ -25,6 +27,7 @@ const App = () => {
 
   const pageChange = (url) => {
     getPeopleAction({ page: url.split('?')[1] });
+    dispatch(setSelectedPeople(undefined));
   };
 
   useEffect(() => {

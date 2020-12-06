@@ -2,6 +2,8 @@
 import './App.css';
 
 import React, { useState, useEffect } from 'react';
+
+import { useSelector } from 'react-redux';
 import {
   Container, TableContainer, Typography,
 } from '@material-ui/core';
@@ -18,6 +20,11 @@ const App = () => {
   const [characters, setCharacters] = useState([]);
   const [selectedCharacter, setSelectedCharacter] = useState(undefined);
   const [page, setPage] = useState({ previous: null, next: null });
+
+  const starWarsPeople = useSelector((state) => {
+    console.log('state', state);
+    return state.people;
+  });
 
   const loadPeople = (options) => {
     setLoading(true);
@@ -42,8 +49,9 @@ const App = () => {
   };
 
   useEffect(() => {
+    console.log(starWarsPeople);
     loadPeople();
-  }, []);
+  }, [starWarsPeople]);
 
   return (
     <Container classes={{ root: 'App-container' }}>

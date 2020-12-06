@@ -1,7 +1,8 @@
+/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable no-console */
 import './App.css';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 import {
@@ -9,6 +10,7 @@ import {
 } from '@material-ui/core';
 
 import { getPeople } from './services';
+import useApiServices from './useApiServices';
 
 import Loading from './common/Loading';
 import People from './People';
@@ -16,31 +18,42 @@ import Detail from './Detail';
 import Pagination from './Pagination';
 
 const App = () => {
-  const [loading, setLoading] = useState(false);
-  const [characters, setCharacters] = useState([]);
-  const [selectedCharacter, setSelectedCharacter] = useState(undefined);
-  const [page, setPage] = useState({ previous: null, next: null });
+  const { getPeopleAction } = useApiServices();
+  // const [loading, setLoading] = useState(false);
+  // const [characters, setCharacters] = useState([]);
+  // const [selectedCharacter, setSelectedCharacter] = useState(undefined);
+  // const [page, setPage] = useState({ previous: null, next: null });
 
-  const starWarsPeople = useSelector((state) => {
-    console.log('state', state);
-    return state.people;
-  });
+  const {
+    characters, page, loading, selectedCharacter,
+  } = useSelector(
+    (state) => ({
+      loading: state.ui.loadingPeople,
+      selectedCharacter: state.ui.selectedCharacter,
+      page: {
+        previous: state.people.previous,
+        next: state.people.next,
+      },
+      characters: state.people.results,
+    }),
+  );
 
   const loadPeople = (options) => {
-    setLoading(true);
+    // setLoading(true);
     getPeople(options)
       .then((res) => {
-        setLoading(false);
-        setCharacters(res.results);
-        setSelectedCharacter(undefined);
-        setPage({
-          previous: res.previous,
-          next: res.next,
-        });
+        console.log(res);
+        // setLoading(false);
+        // setCharacters(res.results);
+        // setSelectedCharacter(undefined);
+        // setPage({
+        //   previous: res.previous,
+        //   next: res.next,
+        // });
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false);
+        // setLoading(false);
       });
   };
 
@@ -49,9 +62,13 @@ const App = () => {
   };
 
   useEffect(() => {
-    console.log(starWarsPeople);
-    loadPeople();
-  }, [starWarsPeople]);
+    getPeopleAction();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // useEffect(() => {
+  //   loadPeople();
+  // }, []);
 
   return (
     <Container classes={{ root: 'App-container' }}>
@@ -61,7 +78,6 @@ const App = () => {
         {!loading && (
           <People
             characters={characters}
-            onRowSelect={setSelectedCharacter}
           />
         )}
       </TableContainer>

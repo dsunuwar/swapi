@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -7,6 +8,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { Typography } from '@material-ui/core';
+import { setSelectedPeople } from '../../redux/actions';
 
 const useStyles = makeStyles({
   table: {
@@ -14,12 +17,19 @@ const useStyles = makeStyles({
   },
 });
 
-const PeopleList = ({ characters, onRowSelect }) => {
+const PeopleList = ({ characters }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const handleRowSelection = (e, rowItem) => {
-    onRowSelect(rowItem);
+    dispatch(setSelectedPeople(rowItem));
   };
+
+  if (!characters.length) {
+    return (
+      <Typography variant="body2">Oops! No records found.</Typography>
+    );
+  }
 
   return (
     <Table className={classes.table} size="small" aria-label="Star people">

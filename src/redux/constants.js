@@ -1,0 +1,6 @@
+export const LOADING_PEOPLE = 'LOADING_PEOPLE';
+export const SET_PEOPLE = 'SET_PEOPLE';
+export const SET_SELECTED_PEOPLE = 'SET_SELECTED_PEOPLE';
+
+export const LOADING_FILMS = 'LOADING_FILMS';
+export const SET_FILM = 'SET_FILM';

@@ -1,48 +1,41 @@
+/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable no-console */
 import './App.css';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Container, TableContainer, Typography,
 } from '@material-ui/core';
 
-import { getPeople } from './services';
+import useApiServices from './useApiServices';
 
-import Loading from './common/Loading';
+import Loading from './Loading';
 import People from './People';
 import Detail from './Detail';
 import Pagination from './Pagination';
+import { peopleSelector } from '../redux/selectors';
+import { setSelectedPeople } from '../redux/actions';
 
 const App = () => {
-  const [loading, setLoading] = useState(false);
-  const [characters, setCharacters] = useState([]);
-  const [selectedCharacter, setSelectedCharacter] = useState(undefined);
-  const [page, setPage] = useState({ previous: null, next: null });
-
-  const loadPeople = (options) => {
-    setLoading(true);
-    getPeople(options)
-      .then((res) => {
-        setLoading(false);
-        setCharacters(res.results);
-        setSelectedCharacter(undefined);
-        setPage({
-          previous: res.previous,
-          next: res.next,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
-  };
+  const dispatch = useDispatch();
+  const { getCharacters } = useApiServices();
+  const {
+    characters,
+    page,
+    loading,
+    selectedCharacter,
+  } = useSelector((state) => peopleSelector(state));
 
   const pageChange = (url) => {
-    loadPeople({ page: url.split('?')[1] });
+    getCharacters({ page: url.split('?')[1] });
+    dispatch(setSelectedPeople(undefined));
   };
 
   useEffect(() => {
-    loadPeople();
+    getCharacters();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -53,7 +46,6 @@ const App = () => {
         {!loading && (
           <People
             characters={characters}
-            onRowSelect={setSelectedCharacter}
           />
         )}
       </TableContainer>

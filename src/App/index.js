@@ -9,7 +9,6 @@ import {
   Container, TableContainer, Typography,
 } from '@material-ui/core';
 
-import { getPeople } from './services';
 import useApiServices from './useApiServices';
 
 import Loading from './common/Loading';
@@ -24,27 +23,8 @@ const App = () => {
     characters, page, loading, selectedCharacter,
   } = useSelector((state) => peopleSelector(state));
 
-  const loadPeople = (options) => {
-    // setLoading(true);
-    getPeople(options)
-      .then((res) => {
-        console.log(res);
-        // setLoading(false);
-        // setCharacters(res.results);
-        // setSelectedCharacter(undefined);
-        // setPage({
-        //   previous: res.previous,
-        //   next: res.next,
-        // });
-      })
-      .catch((error) => {
-        console.log(error);
-        // setLoading(false);
-      });
-  };
-
   const pageChange = (url) => {
-    loadPeople({ page: url.split('?')[1] });
+    getPeopleAction({ page: url.split('?')[1] });
   };
 
   useEffect(() => {

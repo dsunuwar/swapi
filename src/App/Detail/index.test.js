@@ -9,7 +9,7 @@ jest.mock('../services');
 
 describe('Detail', () => {
   test('renders detail section title', async () => {
-    services.getFilms.mockResolvedValue([
+    services.getCharacterFilms.mockResolvedValue([
       { title: 'title1', director: 'a', releaseDate: 1950 },
       { title: 'title2', director: 'b', releaseDate: 1951 },
     ]);

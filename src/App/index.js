@@ -20,18 +20,21 @@ import { setSelectedPeople } from '../redux/actions';
 
 const App = () => {
   const dispatch = useDispatch();
-  const { getPeopleAction } = useApiServices();
+  const { getCharacters } = useApiServices();
   const {
-    characters, page, loading, selectedCharacter,
+    characters,
+    page,
+    loading,
+    selectedCharacter,
   } = useSelector((state) => peopleSelector(state));
 
   const pageChange = (url) => {
-    getPeopleAction({ page: url.split('?')[1] });
+    getCharacters({ page: url.split('?')[1] });
     dispatch(setSelectedPeople(undefined));
   };
 
   useEffect(() => {
-    getPeopleAction();
+    getCharacters();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

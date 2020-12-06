@@ -19,10 +19,7 @@ export default function useApiServices() {
 
     return axios
       .get(peopleApi)
-      .then((response) => response.data)
-      .catch((error) => {
-        console.log(error);
-      });
+      .then((response) => response.data);
   };
 
   const getFilm = (url) => (
@@ -37,39 +34,41 @@ export default function useApiServices() {
 
   const getFilms = (filmUrls) => {
     const filmPromises = filmUrls.map((url) => getFilm(url));
-    return Promise.all(filmPromises)
-      .then((films) => films)
-      .catch((error) => {
-        console.log(error);
-      });
+    return Promise
+      .all(filmPromises)
+      .then((films) => films);
   };
 
-  // ---- Action creators
-
-  const getPeopleAction = (options) => (
+  const getCharacters = (options) => (
     dispatch(() => {
       dispatch(loadingPeople(true));
       return getPeople(options)
-        .then((peopleData) => {
-          dispatch(setPeople(peopleData));
-          dispatch(loadingPeople(false));
-        });
+        .then((peopleData) => dispatch(setPeople(peopleData)))
+        .catch((error) => {
+          // TODO:
+          // dispatch errorAction for ui component to show
+          console.log(error);
+        })
+        .finally(() => dispatch(loadingPeople(false)));
     })
   );
 
-  const getFilmsAction = (urls) => (
+  const getCharacterFilms = (urls) => (
     dispatch(() => {
       dispatch(loadingFilms(true));
       return getFilms(urls)
-        .then((filmsData) => {
-          dispatch(setFilms(filmsData));
-          dispatch(loadingFilms(false));
-        });
+        .then((filmsData) => dispatch(setFilms(filmsData)))
+        .catch((error) => {
+          // TODO:
+          // dispatch errorAction for ui component to show
+          console.log(error);
+        })
+        .finally(() => dispatch(loadingFilms(false)));
     })
   );
 
   return {
-    getPeopleAction,
-    getFilmsAction,
+    getCharacters,
+    getCharacterFilms,
   };
 }

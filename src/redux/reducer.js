@@ -1,18 +1,5 @@
 import * as constants from './constants';
-
-const initialState = {
-  people: {
-    previous: undefined,
-    next: undefined,
-    results: [],
-  },
-  films: [],
-  ui: {
-    selectedCharacter: undefined,
-    loadingPeople: false,
-    loadingFilms: false,
-  },
-};
+import initialState from './initialState';
 
 export default (state = initialState, action) => {
   switch (action.type) {

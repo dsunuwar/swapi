@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -17,7 +16,7 @@ import Loading from '../common/Loading';
 import { filmSelector } from '../../redux/selectors';
 
 const Films = ({ filmUrls }) => {
-  const { getFilmsAction } = useApiServices();
+  const { getCharacterFilms } = useApiServices();
   const { films, loadingFilms } = useSelector((state) => filmSelector(state));
 
   const releaseYear = (date) => {
@@ -26,12 +25,7 @@ const Films = ({ filmUrls }) => {
   };
 
   useEffect(() => {
-    console.log('loadingFilms', loadingFilms);
-    console.log('films', films);
-  }, [films, loadingFilms]);
-
-  useEffect(() => {
-    getFilmsAction(filmUrls);
+    getCharacterFilms(filmUrls);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filmUrls]);

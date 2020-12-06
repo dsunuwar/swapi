@@ -2,7 +2,9 @@
 import * as axios from 'axios';
 import { useDispatch } from 'react-redux';
 
-import { setPeople, loadingPeople } from '../redux/actions';
+import {
+  loadingPeople, setPeople, loadingFilms, setFilms,
+} from '../redux/actions';
 
 export default function useApiServices() {
   const dispatch = useDispatch();
@@ -55,8 +57,19 @@ export default function useApiServices() {
     })
   );
 
+  const getFilmsAction = (urls) => (
+    dispatch(() => {
+      dispatch(loadingFilms(true));
+      return getFilms(urls)
+        .then((filmsData) => {
+          dispatch(setFilms(filmsData));
+          dispatch(loadingFilms(false));
+        });
+    })
+  );
+
   return {
     getPeopleAction,
-    getFilms,
+    getFilmsAction,
   };
 }

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
-
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import MovieIcon from '@material-ui/icons/Movie';
 import {
   Box,
@@ -11,28 +11,29 @@ import {
   ListItemText,
 } from '@material-ui/core';
 
+import useApiServices from '../useApiServices';
+
 import Loading from '../common/Loading';
-import { getFilms } from '../services';
+import { filmSelector } from '../../redux/selectors';
 
 const Films = ({ filmUrls }) => {
-  const [films, setFilms] = useState([]);
-  const [loadingFilms, setLoadingFilms] = useState(false);
+  const { getFilmsAction } = useApiServices();
+  const { films, loadingFilms } = useSelector((state) => filmSelector(state));
+
   const releaseYear = (date) => {
     const swapiDate = new Date(date);
     return swapiDate.getFullYear();
   };
 
   useEffect(() => {
-    setLoadingFilms(true);
-    getFilms(filmUrls)
-      .then((resFilms) => {
-        setLoadingFilms(false);
-        setFilms(resFilms);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoadingFilms(false);
-      });
+    console.log('loadingFilms', loadingFilms);
+    console.log('films', films);
+  }, [films, loadingFilms]);
+
+  useEffect(() => {
+    getFilmsAction(filmUrls);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filmUrls]);
 
   return (

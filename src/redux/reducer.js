@@ -40,8 +40,15 @@ export default (state = initialState, action) => {
     case constants.SET_FILM:
       return {
         ...state,
-        people: action.payload.films,
+        films: action.payload.films,
       };
+
+    case constants.LOADING_FILMS:
+      return {
+        ...state,
+        ui: { ...state.ui, ...action.payload },
+      };
+
     default:
       return state;
   }

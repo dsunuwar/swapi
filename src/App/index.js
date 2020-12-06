@@ -16,27 +16,13 @@ import Loading from './common/Loading';
 import People from './People';
 import Detail from './Detail';
 import Pagination from './Pagination';
+import { peopleSelector } from '../redux/selectors';
 
 const App = () => {
   const { getPeopleAction } = useApiServices();
-  // const [loading, setLoading] = useState(false);
-  // const [characters, setCharacters] = useState([]);
-  // const [selectedCharacter, setSelectedCharacter] = useState(undefined);
-  // const [page, setPage] = useState({ previous: null, next: null });
-
   const {
     characters, page, loading, selectedCharacter,
-  } = useSelector(
-    (state) => ({
-      loading: state.ui.loadingPeople,
-      selectedCharacter: state.ui.selectedCharacter,
-      page: {
-        previous: state.people.previous,
-        next: state.people.next,
-      },
-      characters: state.people.results,
-    }),
-  );
+  } = useSelector((state) => peopleSelector(state));
 
   const loadPeople = (options) => {
     // setLoading(true);
@@ -65,10 +51,6 @@ const App = () => {
     getPeopleAction();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // useEffect(() => {
-  //   loadPeople();
-  // }, []);
 
   return (
     <Container classes={{ root: 'App-container' }}>

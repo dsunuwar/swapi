@@ -21,7 +21,14 @@ export const loadingPeople = (loading) => ({
   },
 });
 
-export const setFilm = (films) => ({
+export const loadingFilms = (loading) => ({
+  type: constants.LOADING_FILMS,
+  payload: {
+    loadingFilms: loading,
+  },
+});
+
+export const setFilms = (films) => ({
   type: constants.SET_FILM,
   payload: {
     films,
